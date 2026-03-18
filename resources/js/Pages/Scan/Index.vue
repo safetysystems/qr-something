@@ -20,11 +20,20 @@ const decodedValue = ref('');
 const isStarting = ref(false);
 const scannerActive = ref(false);
 const videoElement = ref(null);
+const hasLoadedDevices = ref(false);
 
 const hasMediaSupport = computed(() => (
     typeof navigator !== 'undefined'
     && !!navigator.mediaDevices
     && typeof navigator.mediaDevices.getUserMedia === 'function'
+));
+
+const isSecureBrowserContext = computed(() => (
+    typeof window !== 'undefined' && window.isSecureContext
+));
+
+const canAttemptCameraStart = computed(() => (
+    hasMediaSupport.value && isSecureBrowserContext.value && !isStarting.value
 ));
 
 const codeReader = new BrowserQRCodeReader();
@@ -36,12 +45,14 @@ onMounted(async () => {
         return;
     }
 
-    await loadDevices();
-
-    if (devices.value.length > 0) {
-        selectedDeviceId.value = devices.value[0].deviceId;
-        await startScanner();
+    if (!isSecureBrowserContext.value) {
+        statusMessage.value = 'Camera access requires HTTPS or localhost.';
+        errorMessage.value = 'This deployed page is not running in a secure browser context.';
+        return;
     }
+
+    await loadDevices();
+    statusMessage.value = 'Ready to scan';
 });
 
 onBeforeUnmount(() => {
@@ -51,13 +62,24 @@ onBeforeUnmount(() => {
 async function loadDevices() {
     try {
         devices.value = await BrowserCodeReader.listVideoInputDevices();
+        hasLoadedDevices.value = true;
+
+        if (!selectedDeviceId.value && devices.value.length > 0) {
+            selectedDeviceId.value = devices.value[0].deviceId;
+        }
     } catch {
-        errorMessage.value = 'Unable to access camera devices.';
+        hasLoadedDevices.value = true;
     }
 }
 
 async function startScanner() {
-    if (!selectedDeviceId.value || !videoElement.value) {
+    if (!videoElement.value || !hasMediaSupport.value) {
+        return;
+    }
+
+    if (!isSecureBrowserContext.value) {
+        errorMessage.value = 'Camera access requires HTTPS or localhost. Open the deployed site over a valid secure URL.';
+        statusMessage.value = 'Secure context required';
         return;
     }
 
@@ -68,7 +90,7 @@ async function startScanner() {
 
     try {
         scannerControls = await codeReader.decodeFromVideoDevice(
-            selectedDeviceId.value,
+            selectedDeviceId.value || undefined,
             videoElement.value,
             (result, error) => {
                 if (result) {
@@ -90,8 +112,9 @@ async function startScanner() {
 
         scannerActive.value = true;
         statusMessage.value = 'Scanner active';
-    } catch {
-        errorMessage.value = 'Unable to start the camera scanner.';
+        await loadDevices();
+    } catch (error) {
+        errorMessage.value = resolveCameraErrorMessage(error);
         statusMessage.value = 'Camera unavailable';
     } finally {
         isStarting.value = false;
@@ -181,6 +204,30 @@ function openDecodedTarget() {
         window.location.assign(target);
     }
 }
+
+function resolveCameraErrorMessage(error) {
+    if (!error) {
+        return 'Unable to start the camera scanner.';
+    }
+
+    if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+        return 'Camera permission was denied. Allow camera access in the browser and try again.';
+    }
+
+    if (error.name === 'NotFoundError' || error.name === 'DevicesNotFoundError') {
+        return 'No camera was found on this device.';
+    }
+
+    if (error.name === 'NotReadableError' || error.name === 'TrackStartError') {
+        return 'The camera is already in use by another app or browser tab.';
+    }
+
+    if (error.name === 'SecurityError') {
+        return 'Camera access is blocked because the page is not running in a secure context.';
+    }
+
+    return error.message || 'Unable to start the camera scanner.';
+}
 </script>
 
 <template>
@@ -221,6 +268,7 @@ function openDecodedTarget() {
                     <video
                         ref="videoElement"
                         class="scanner-video"
+                        autoplay
                         muted
                         playsinline
                     ></video>
@@ -235,10 +283,10 @@ function openDecodedTarget() {
                             :disabled="devices.length === 0 || isStarting"
                         >
                             <option
-                                v-if="devices.length === 0"
+                                v-if="devices.length === 0 && hasLoadedDevices"
                                 value=""
                             >
-                                No camera devices detected
+                                Auto-select device when camera starts
                             </option>
                             <option
                                 v-for="device in devices"
@@ -252,7 +300,7 @@ function openDecodedTarget() {
 
                     <div class="flex items-end">
                         <BaseButton
-                            :disabled="!selectedDeviceId || isStarting"
+                            :disabled="!canAttemptCameraStart"
                             @click="startScanner"
                         >
                             {{ isStarting ? 'Starting...' : 'Start camera' }}
@@ -270,6 +318,10 @@ function openDecodedTarget() {
                         {{ errorMessage }}
                     </p>
                 </div>
+
+                <p class="text-sm text-muted">
+                    Mobile note: the browser will only ask for camera access on a secure `https://` deployment or on `localhost`.
+                </p>
             </div>
         </BaseCard>
 
