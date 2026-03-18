@@ -16,21 +16,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $password = env('ADMIN_PASSWORD');
-
-        if (! $password && app()->environment(['local', 'testing'])) {
-            $password = 'password';
-        }
-
-        if (! $password) {
-            return;
-        }
-
-        User::query()->updateOrCreate([
-            'email' => env('ADMIN_EMAIL', 'admin@example.com'),
-        ], [
-            'name' => env('ADMIN_NAME', 'System Administrator'),
-            'password' => Hash::make($password),
+        User::create([
+            'name' => 'Admin User',
+            'email' => 'admin@admin.com',
+            'password' => '123qwe',
             'is_super_admin' => true,
         ]);
     }
