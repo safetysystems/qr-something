@@ -51,6 +51,41 @@ it('renders workplace equipment for a workplace user', function (): void {
             ->has('equipment.data', 1));
 });
 
+it('allows a workplace user to create equipment in the client portal', function (): void {
+    $user = User::factory()->create();
+    $workplace = Workplace::query()->create([
+        'uuid' => (string) Str::uuid(),
+        'name' => 'South Plant',
+    ]);
+
+    $workplace->users()->attach($user->id, ['role' => 'owner']);
+
+    $this->actingAs($user)
+        ->post(route('client.equipment.store'), [
+            'name' => 'Pump 9',
+            'type' => 'Pump',
+            'asset_code' => 'P-009',
+            'serial_number' => 'SN-009',
+            'manufacturer' => 'Flow Systems',
+            'model' => 'FS-9',
+            'location_label' => 'Zone A',
+            'notes' => 'Installed by client team.',
+        ])
+        ->assertRedirect();
+
+    $equipment = Equipment::query()->firstOrFail();
+
+    expect($equipment->workplace_id)->toBe($workplace->id);
+    expect($equipment->created_by)->toBe($user->id);
+
+    $this->assertDatabaseHas('equipment', [
+        'id' => $equipment->id,
+        'name' => 'Pump 9',
+        'workplace_id' => $workplace->id,
+        'created_by' => $user->id,
+    ]);
+});
+
 it('forbids super administrators from the workplace portal routes', function (): void {
     $admin = User::factory()->superAdmin()->create();
 

@@ -1,11 +1,17 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, useSlots } from 'vue';
 import { Link } from '@inertiajs/vue3';
+
+const slots = useSlots();
 
 const props = defineProps({
     variant: {
         type: String,
         default: 'primary',
+    },
+    title: {
+        type: String,
+        default: null,
     },
     href: {
         type: String,
@@ -34,6 +40,35 @@ const classes = computed(() => {
         props.disabled ? 'cursor-not-allowed opacity-60' : '',
     ];
 });
+
+const resolvedTitle = computed(() => {
+    if (props.title) {
+        return props.title;
+    }
+
+    const nodes = slots.default?.() ?? [];
+    const text = collectNodeText(nodes)
+        .replace(/\s+/g, ' ')
+        .trim();
+
+    return text || null;
+});
+
+function collectNodeText(nodes) {
+    return nodes
+        .map((node) => {
+            if (typeof node.children === 'string') {
+                return node.children;
+            }
+
+            if (Array.isArray(node.children)) {
+                return collectNodeText(node.children);
+            }
+
+            return '';
+        })
+        .join(' ');
+}
 </script>
 
 <template>
@@ -41,6 +76,7 @@ const classes = computed(() => {
         v-if="href"
         :href="href"
         :class="classes"
+        :title="resolvedTitle"
     >
         <slot />
     </Link>
@@ -50,6 +86,7 @@ const classes = computed(() => {
         :type="type"
         :class="classes"
         :disabled="disabled"
+        :title="resolvedTitle"
     >
         <slot />
     </button>

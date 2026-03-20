@@ -1,5 +1,6 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
+import BaseButton from '@/Components/Base/BaseButton.vue';
 import BasePagination from '@/Components/Base/BasePagination.vue';
 import ClientLayout from '@/Layouts/ClientLayout.vue';
 import { formatDate } from '@/utils/formatters';
@@ -17,18 +18,28 @@ defineProps({
         type: Object,
         required: true,
     },
+    links: {
+        type: Object,
+        required: true,
+    },
 });
 </script>
 
 <template>
     <Head :title="`${workplace.name} Equipment`" />
 
-    <section>
-        <p class="brand-kicker">Equipment</p>
-        <h1 class="page-title mt-2">Equipment registry</h1>
-        <p class="page-subtitle mt-3">
-            Read-only view of the equipment currently registered under {{ workplace.name }}.
-        </p>
+    <section class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+            <p class="brand-kicker">Equipment</p>
+            <h1 class="page-title mt-2">Equipment registry</h1>
+            <p class="page-subtitle mt-3">
+                Manage the equipment currently registered under {{ workplace.name }}.
+            </p>
+        </div>
+
+        <BaseButton :href="links.create">
+            Add equipment
+        </BaseButton>
     </section>
 
     <section class="mt-8">
@@ -37,7 +48,13 @@ defineProps({
             class="empty-state"
         >
             <p class="text-lg font-semibold">No equipment found</p>
-            <p class="page-subtitle mt-2">Equipment assigned to this workplace will appear here.</p>
+            <p class="page-subtitle mt-2">Create the first equipment record for this workplace.</p>
+
+            <div class="mt-6">
+                <BaseButton :href="links.create">
+                    Add equipment
+                </BaseButton>
+            </div>
         </div>
 
         <div

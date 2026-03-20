@@ -74,8 +74,14 @@ Route::middleware(['auth', EnsureWorkplaceUser::class])
         Route::get('/dashboard', ClientDashboardController::class)
             ->name('dashboard');
 
+        Route::get('/equipment/create', [ClientEquipmentController::class, 'create'])
+            ->name('equipment.create');
+
         Route::get('/equipment', [ClientEquipmentController::class, 'index'])
             ->name('equipment.index');
+
+        Route::post('/equipment', [ClientEquipmentController::class, 'store'])
+            ->name('equipment.store');
 
         Route::get('/equipment/{equipment}', [ClientEquipmentController::class, 'show'])
             ->name('equipment.show');

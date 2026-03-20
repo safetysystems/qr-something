@@ -59,15 +59,19 @@ class HandleInertiaRequests extends Middleware
             'navigation' => $user
                 ? ($user->is_super_admin
                     ? [
+                        'home' => route('home'),
                         'dashboard' => route('dashboard'),
                         'workplaces' => route('workplaces.index'),
+                        'create_workplace' => route('workplaces.create'),
                         'project_tracker' => route('project-tracker.index'),
                         'scanner' => route('scanner.index'),
                         'logout' => route('logout'),
                     ]
                     : [
+                        'home' => route('home'),
                         'dashboard' => route('client.dashboard'),
                         'equipment' => route('client.equipment.index'),
+                        'create_equipment' => route('client.equipment.create'),
                         'logout' => route('logout'),
                     ])
                 : [],

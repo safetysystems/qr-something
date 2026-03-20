@@ -45,12 +45,17 @@ defineProps({
             </p>
         </div>
 
-        <BaseButton
-            :href="links.equipment"
-            variant="secondary"
-        >
-            View equipment
-        </BaseButton>
+        <div class="flex flex-wrap gap-3">
+            <BaseButton
+                :href="links.equipment"
+                variant="secondary"
+            >
+                View equipment
+            </BaseButton>
+            <BaseButton :href="links.create_equipment">
+                Add equipment
+            </BaseButton>
+        </div>
     </section>
 
     <section class="mt-6 grid gap-4 md:grid-cols-3">

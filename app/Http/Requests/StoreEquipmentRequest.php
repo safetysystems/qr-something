@@ -14,8 +14,11 @@ class StoreEquipmentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        /** @var Workplace $workplace */
-        $workplace = $this->route('workplace');
+        $workplace = $this->resolveWorkplace();
+
+        if (! $workplace) {
+            return false;
+        }
 
         return $this->user()?->can('create', [Equipment::class, $workplace]) ?? false;
     }
@@ -27,8 +30,7 @@ class StoreEquipmentRequest extends FormRequest
      */
     public function rules(): array
     {
-        /** @var Workplace $workplace */
-        $workplace = $this->route('workplace');
+        $workplace = $this->resolveWorkplace();
 
         return [
             'name' => ['required', 'string', 'max:255'],
@@ -49,5 +51,16 @@ class StoreEquipmentRequest extends FormRequest
             'location_label' => ['nullable', 'string', 'max:255'],
             'notes' => ['nullable', 'string'],
         ];
+    }
+
+    private function resolveWorkplace(): ?Workplace
+    {
+        $workplace = $this->route('workplace');
+
+        if ($workplace instanceof Workplace) {
+            return $workplace;
+        }
+
+        return $this->user()?->currentWorkplace();
     }
 }

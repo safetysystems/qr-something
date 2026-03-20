@@ -39,6 +39,7 @@ class ClientDashboardController extends Controller
             ),
             'links' => [
                 'equipment' => route('client.equipment.index'),
+                'create_equipment' => route('client.equipment.create'),
             ],
         ]);
     }

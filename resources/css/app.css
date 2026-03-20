@@ -76,6 +76,14 @@ a {
     border-color: var(--app-border);
 }
 
+.dashboard-brand-link {
+    @apply transition;
+}
+
+.dashboard-brand-link:hover {
+    opacity: 0.92;
+}
+
 .dashboard-brand-mark {
     @apply flex h-10 w-10 items-center justify-center rounded-xl text-sm font-semibold uppercase tracking-[0.08em];
     background-color: var(--app-primary);
@@ -103,8 +111,28 @@ a {
 }
 
 .sidebar-link-icon {
-    @apply flex h-9 w-9 items-center justify-center rounded-lg;
+    @apply flex h-9 w-9 shrink-0 items-center justify-center rounded-lg;
     background-color: #f2f4f7;
+}
+
+.sidebar-link-copy {
+    @apply min-w-0;
+}
+
+.sidebar-link-label {
+    @apply text-sm font-semibold;
+    color: inherit;
+}
+
+.sidebar-group {
+    @apply border-b pb-6;
+    border-color: var(--app-border);
+}
+
+.sidebar-context-card {
+    @apply rounded-2xl border p-4;
+    border-color: var(--app-border);
+    background-color: #f8fafc;
 }
 
 .sidebar-footer {
@@ -134,6 +162,10 @@ a {
 
 .dashboard-topbar-inner {
     @apply flex flex-col gap-4 px-5 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8;
+}
+
+.dashboard-topbar-actions {
+    @apply flex flex-wrap items-center gap-3;
 }
 
 .dashboard-content {

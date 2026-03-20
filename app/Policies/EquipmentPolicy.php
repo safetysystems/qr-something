@@ -15,7 +15,7 @@ class EquipmentPolicy
 
     public function create(User $user, Workplace $workplace): bool
     {
-        return $user->is_super_admin;
+        return $user->canAccessWorkplace($workplace) && is_null($workplace->archived_at);
     }
 
     public function update(User $user, Equipment $equipment): bool
