@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import BaseButton from '@/Components/Base/BaseButton.vue';
 import BasePagination from '@/Components/Base/BasePagination.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
@@ -19,6 +19,14 @@ defineProps({
         required: true,
     },
 });
+
+function archiveWorkplace(workplace) {
+    if (!window.confirm(`Archive ${workplace.name}?`)) {
+        return;
+    }
+
+    router.delete(workplace.links.destroy);
+}
 </script>
 
 <template>
@@ -58,7 +66,7 @@ defineProps({
                         <th>Primary contact</th>
                         <th>Equipment</th>
                         <th>Created</th>
-                        <th class="w-32">Action</th>
+                        <th class="w-40">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -79,12 +87,43 @@ defineProps({
                         <td>{{ workplace.equipment_count ?? 0 }}</td>
                         <td>{{ formatDate(workplace.created_at) }}</td>
                         <td>
-                            <Link
-                                :href="workplace.links.show"
-                                class="link-primary font-semibold"
-                            >
-                                Open
-                            </Link>
+                            <div class="table-action-group">
+                                <Link
+                                    :href="workplace.links.show"
+                                    class="table-action-button"
+                                    title="View workplace"
+                                >
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-4 w-4">
+                                        <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z" />
+                                        <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                </Link>
+
+                                <Link
+                                    :href="workplace.links.edit"
+                                    class="table-action-button"
+                                    title="Edit workplace"
+                                >
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-4 w-4">
+                                        <path d="M12 20h9" />
+                                        <path d="m16.5 3.5 4 4L8 20l-5 1 1-5 12.5-12.5Z" />
+                                    </svg>
+                                </Link>
+
+                                <button
+                                    type="button"
+                                    class="table-action-button table-action-button-danger"
+                                    title="Delete workplace"
+                                    @click="archiveWorkplace(workplace)"
+                                >
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-4 w-4">
+                                        <path d="M3 6h18" />
+                                        <path d="M8 6V4h8v2" />
+                                        <path d="m19 6-1 14H6L5 6" />
+                                        <path d="M10 11v6M14 11v6" />
+                                    </svg>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
