@@ -11,17 +11,17 @@
 }
 
 :root {
-    --app-bg: #f5f7fa;
-    --app-bg-accent: #f5f7fa;
+    --app-bg: #f9f9ff;
+    --app-bg-accent: #ecedf7;
     --app-surface: #ffffff;
     --app-surface-strong: #ffffff;
-    --app-panel: #f8fafc;
-    --app-border: #e4e7ec;
-    --app-text: #101828;
-    --app-muted: #667085;
-    --app-primary: #175cd3;
-    --app-primary-strong: #1849a9;
-    --app-secondary: #344054;
+    --app-panel: #f2f3fd;
+    --app-border: #d9deed;
+    --app-text: #191c23;
+    --app-muted: #5f6677;
+    --app-primary: #005bbf;
+    --app-primary-strong: #004493;
+    --app-secondary: #475e8c;
     --app-danger: #b42318;
     --app-danger-strong: #912018;
     --app-success: #027a48;
@@ -35,7 +35,9 @@ html {
 
 body {
     min-height: 100vh;
-    background: var(--app-bg);
+    background:
+        radial-gradient(circle at top center, rgba(173, 199, 255, 0.24), transparent 32%),
+        var(--app-bg);
     color: var(--app-text);
     font-family: var(--font-sans);
 }
@@ -57,6 +59,10 @@ a {
     @apply min-h-screen overflow-x-hidden;
 }
 
+.dashboard-shell-executive {
+    @apply bg-transparent;
+}
+
 .dashboard-overlay {
     @apply fixed inset-0 z-30 bg-black/30 lg:hidden;
 }
@@ -67,6 +73,18 @@ a {
     background-color: var(--app-surface);
 }
 
+.executive-sidebar {
+    @apply w-[17rem] border-r-0 px-4 py-6;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(242, 243, 253, 0.98));
+    box-shadow: 20px 0 45px rgba(0, 30, 84, 0.06);
+    overflow: visible;
+}
+
+.executive-sidebar-collapsed {
+    @apply lg:w-[5.75rem];
+}
+
 .dashboard-sidebar-open {
     transform: translateX(0);
 }
@@ -74,6 +92,18 @@ a {
 .dashboard-brand {
     @apply flex items-center gap-4 border-b pb-6;
     border-color: var(--app-border);
+}
+
+.executive-brand {
+    @apply mb-8 border-b-0 pb-0;
+}
+
+.executive-brand-row {
+    @apply mb-8;
+}
+
+.executive-brand-copy {
+    @apply min-w-0 transition duration-200;
 }
 
 .dashboard-brand-link {
@@ -88,6 +118,22 @@ a {
     @apply flex h-10 w-10 items-center justify-center rounded-xl text-sm font-semibold uppercase tracking-[0.08em];
     background-color: var(--app-primary);
     color: var(--app-on-primary);
+}
+
+.executive-brand-mark {
+    @apply flex h-12 w-12 items-center justify-center rounded-2xl;
+    background: linear-gradient(135deg, var(--app-primary), #1a73e8);
+    box-shadow: 0 16px 28px rgba(0, 91, 191, 0.22);
+}
+
+.executive-brand-title {
+    @apply text-base font-semibold tracking-tight;
+    color: #11428f;
+}
+
+.executive-brand-subtitle {
+    @apply mt-1 text-[10px] font-semibold uppercase tracking-[0.24em];
+    color: var(--app-muted);
 }
 
 .sidebar-section-title {
@@ -115,6 +161,41 @@ a {
     background-color: #f2f4f7;
 }
 
+.executive-nav {
+    @apply flex-1 space-y-1;
+}
+
+.executive-nav-link {
+    @apply mx-2 flex items-center gap-3 rounded-full px-4 py-3 text-sm font-semibold transition duration-300;
+    color: var(--app-muted);
+}
+
+.executive-nav-label {
+    @apply whitespace-nowrap transition duration-200;
+}
+
+.executive-nav-link:hover {
+    background-color: rgba(224, 226, 236, 0.55);
+    color: var(--app-text);
+    transform: translateX(4px);
+}
+
+.executive-nav-link-active {
+    background-color: rgba(178, 201, 254, 0.44);
+    color: #11428f;
+}
+
+.executive-nav-icon {
+    @apply flex h-10 w-10 items-center justify-center rounded-full;
+    background-color: rgba(255, 255, 255, 0.86);
+    box-shadow: inset 0 0 0 1px rgba(193, 198, 214, 0.65);
+}
+
+.executive-nav-link-active .executive-nav-icon {
+    background-color: rgba(255, 255, 255, 0.95);
+    color: var(--app-primary);
+}
+
 .sidebar-link-copy {
     @apply min-w-0;
 }
@@ -139,6 +220,45 @@ a {
     @apply mt-auto pt-6;
 }
 
+.executive-sidebar-cta {
+    @apply px-2 pb-6 pt-4;
+}
+
+.executive-cta-button {
+    @apply gap-2;
+}
+
+.executive-cta-icon {
+    @apply inline-flex h-4.5 w-4.5 shrink-0 items-center justify-center;
+}
+
+.executive-cta-label {
+    @apply whitespace-nowrap transition duration-200;
+}
+
+.executive-sidebar-footer {
+    @apply mt-auto space-y-2 border-t pt-4;
+    border-color: rgba(193, 198, 214, 0.72);
+}
+
+.executive-footer-link {
+    @apply mx-2 flex w-[calc(100%-1rem)] items-center gap-3 rounded-full px-4 py-2.5 text-sm font-medium transition;
+    color: var(--app-muted);
+}
+
+.executive-footer-link:hover {
+    background-color: rgba(224, 226, 236, 0.55);
+    color: var(--app-text);
+}
+
+.executive-footer-label {
+    @apply whitespace-nowrap transition duration-200;
+}
+
+.executive-footer-icon {
+    @apply h-8 w-8 text-inherit;
+}
+
 .sidebar-user-card {
     @apply rounded-2xl border p-4;
     border-color: var(--app-border);
@@ -153,6 +273,14 @@ a {
     @apply min-w-0 lg:ml-[16rem];
 }
 
+.executive-main {
+    @apply lg:ml-[17rem];
+}
+
+.executive-main-collapsed {
+    @apply lg:ml-[5.75rem];
+}
+
 .dashboard-topbar {
     @apply sticky top-0 z-20 border-b;
     border-color: var(--app-border);
@@ -160,8 +288,18 @@ a {
     backdrop-filter: blur(10px);
 }
 
+.executive-topbar {
+    background-color: rgba(255, 255, 255, 0.78);
+    border-color: rgba(193, 198, 214, 0.72);
+    box-shadow: 0 8px 24px rgba(0, 30, 84, 0.05);
+}
+
 .dashboard-topbar-inner {
     @apply flex flex-col gap-4 px-5 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8;
+}
+
+.executive-topbar-inner {
+    @apply gap-6 px-5 py-4 lg:px-8;
 }
 
 .dashboard-topbar-actions {
@@ -172,11 +310,26 @@ a {
     @apply pb-10 pt-2;
 }
 
+.executive-content {
+    @apply pb-12 pt-6;
+}
+
 .sidebar-toggle {
     @apply inline-flex h-10 w-10 items-center justify-center rounded-xl border lg:hidden;
     border-color: var(--app-border);
     background-color: var(--app-surface);
     color: var(--app-secondary);
+}
+
+.executive-sidebar-toggle {
+    @apply lg:hidden;
+}
+
+.executive-collapse-toggle {
+    @apply absolute top-8 hidden lg:inline-flex;
+    right: -1.15rem;
+    z-index: 20;
+    box-shadow: 0 10px 24px rgba(0, 30, 84, 0.1);
 }
 
 .topbar-user {
@@ -189,6 +342,139 @@ a {
     @apply flex h-9 w-9 items-center justify-center rounded-lg text-sm font-semibold uppercase;
     background-color: #eff4ff;
     color: var(--app-primary);
+}
+
+.executive-topbar-start {
+    @apply flex items-start gap-4;
+}
+
+.executive-eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.24em];
+    color: var(--app-primary);
+}
+
+.executive-title {
+    @apply mt-1 text-2xl font-semibold tracking-tight sm:text-3xl;
+}
+
+.executive-subtitle {
+    @apply mt-2 max-w-2xl text-sm leading-6;
+    color: var(--app-muted);
+}
+
+.executive-topbar-actions {
+    @apply items-center gap-3;
+}
+
+.executive-user-chip {
+    @apply flex items-center gap-3 rounded-full border px-3 py-2;
+    border-color: rgba(193, 198, 214, 0.72);
+    background-color: rgba(255, 255, 255, 0.76);
+}
+
+.executive-user-copy {
+    @apply text-right;
+}
+
+.executive-avatar {
+    @apply flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold uppercase;
+    background: linear-gradient(135deg, rgba(178, 201, 254, 0.55), rgba(173, 199, 255, 0.92));
+    color: #11428f;
+}
+
+.executive-page-wrap {
+    @apply max-w-7xl;
+}
+
+@media (min-width: 1024px) {
+    .executive-sidebar,
+    .executive-main,
+    .executive-brand-copy,
+    .executive-nav-link,
+    .executive-nav-label,
+    .executive-footer-link,
+    .executive-footer-label,
+    .executive-cta-button,
+    .executive-cta-label {
+        transition:
+            width 0.2s ease,
+            margin 0.2s ease,
+            padding 0.2s ease,
+            opacity 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .executive-sidebar.executive-sidebar-collapsed {
+        @apply px-3;
+    }
+
+    .executive-sidebar.executive-sidebar-collapsed .executive-brand-row {
+        @apply mb-0;
+    }
+
+    .executive-sidebar.executive-sidebar-collapsed .executive-brand-copy,
+    .executive-sidebar.executive-sidebar-collapsed .executive-nav-label,
+    .executive-sidebar.executive-sidebar-collapsed .executive-cta-label,
+    .executive-sidebar.executive-sidebar-collapsed .executive-footer-label {
+        width: 0;
+        opacity: 0;
+        transform: translateX(-6px);
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    .executive-sidebar.executive-sidebar-collapsed .executive-nav {
+        @apply px-0 pt-8;
+    }
+
+    .executive-sidebar.executive-sidebar-collapsed .executive-nav-link,
+    .executive-sidebar.executive-sidebar-collapsed .executive-footer-link {
+        @apply mx-auto justify-center gap-0 px-0;
+    }
+
+    .executive-sidebar.executive-sidebar-collapsed .executive-nav-link {
+        width: 3.75rem;
+        min-width: 3.75rem;
+        height: 3.75rem;
+        border-radius: 9999px;
+    }
+
+    .executive-sidebar.executive-sidebar-collapsed .executive-nav-icon,
+    .executive-sidebar.executive-sidebar-collapsed .executive-footer-icon {
+        margin: 0;
+    }
+
+    .executive-sidebar.executive-sidebar-collapsed .executive-footer-link {
+        width: 3.25rem;
+        min-width: 3.25rem;
+        height: 3.25rem;
+        border-radius: 9999px;
+    }
+
+    .executive-sidebar.executive-sidebar-collapsed .executive-nav-link:hover {
+        transform: none;
+    }
+
+    .executive-sidebar.executive-sidebar-collapsed .executive-sidebar-cta {
+        @apply px-0;
+        display: flex;
+        justify-content: center;
+    }
+
+    .executive-sidebar.executive-sidebar-collapsed .executive-cta-button {
+        @apply mx-auto justify-center gap-0 px-0;
+        width: 3.75rem;
+        min-width: 3.75rem;
+        height: 3.75rem;
+        border-radius: 9999px;
+    }
+
+    .executive-sidebar.executive-sidebar-collapsed .executive-sidebar-footer {
+        @apply px-0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 .guest-wrap {
@@ -386,6 +672,26 @@ a {
     border-top: 1px solid var(--app-border);
 }
 
+.table-action-group {
+    @apply flex items-center gap-2;
+}
+
+.table-action-button {
+    @apply inline-flex h-9 w-9 items-center justify-center rounded-lg border transition;
+    border-color: var(--app-border);
+    background-color: rgba(255, 255, 255, 0.92);
+    color: var(--app-secondary);
+}
+
+.table-action-button:hover {
+    background-color: rgba(242, 243, 253, 0.95);
+    color: var(--app-primary);
+}
+
+.table-action-button-danger:hover {
+    color: var(--app-danger);
+}
+
 .link-primary {
     color: var(--app-primary);
 }
@@ -483,6 +789,730 @@ a {
 .scanner-upload-input {
     @apply block w-full text-sm;
     color: var(--app-muted);
+}
+
+.scan-page {
+    @apply space-y-8;
+}
+
+.scan-page-header {
+    @apply flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between;
+}
+
+.scan-breadcrumbs {
+    @apply mb-2 flex items-center gap-2 text-sm font-medium;
+    color: var(--app-muted);
+}
+
+.scan-breadcrumb-active {
+    color: var(--app-primary);
+}
+
+.scan-page-title {
+    @apply text-4xl font-semibold tracking-tight;
+}
+
+.scan-page-subtitle {
+    @apply mt-3 max-w-2xl text-sm leading-6;
+    color: var(--app-muted);
+}
+
+.scan-ready-pill {
+    @apply inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold;
+    background-color: rgba(178, 201, 254, 0.28);
+    color: #21406c;
+}
+
+.scan-status-dot {
+    @apply h-2.5 w-2.5 rounded-full;
+}
+
+.scan-status-dot-active {
+    background-color: #22c55e;
+    box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.14);
+}
+
+.scan-status-dot-idle {
+    background-color: var(--app-primary);
+    box-shadow: 0 0 0 5px rgba(0, 91, 191, 0.14);
+}
+
+.scan-status-dot-error {
+    background-color: var(--app-danger);
+    box-shadow: 0 0 0 5px rgba(180, 35, 24, 0.14);
+}
+
+.scan-grid {
+    @apply grid gap-6 xl:grid-cols-[1.25fr,0.8fr];
+}
+
+.scan-primary-column,
+.scan-side-column {
+    @apply space-y-6;
+}
+
+.scan-card,
+.scan-status-card,
+.scan-history-card {
+    @apply rounded-[1.25rem] p-6 shadow-sm;
+    background-color: rgba(255, 255, 255, 0.88);
+    box-shadow: 0 18px 40px rgba(0, 30, 84, 0.06);
+}
+
+.scan-card-header {
+    @apply flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between;
+}
+
+.scan-card-title-wrap {
+    @apply flex items-center gap-3;
+}
+
+.scan-card-icon,
+.scan-upload-icon,
+.scan-status-icon,
+.scan-history-empty-icon {
+    @apply flex h-11 w-11 items-center justify-center rounded-xl;
+    background-color: rgba(216, 226, 255, 0.62);
+    color: var(--app-primary);
+}
+
+.scan-card-title,
+.scan-upload-title,
+.scan-tips-title,
+.scan-history-title {
+    @apply text-xl font-semibold tracking-tight;
+}
+
+.scan-card-copy,
+.scan-upload-copy,
+.scan-status-copy,
+.scan-history-empty-text {
+    @apply mt-1 text-sm leading-6;
+    color: var(--app-muted);
+}
+
+.scan-card-controls {
+    @apply min-w-[18rem] max-w-full;
+}
+
+.scan-viewport {
+    @apply relative mt-6 overflow-hidden rounded-[1.25rem];
+    background:
+        radial-gradient(circle at center, rgba(0, 91, 191, 0.2), rgba(15, 23, 42, 0.96));
+}
+
+.scan-viewport .scanner-video {
+    @apply h-[24rem] w-full object-cover opacity-50;
+}
+
+.scan-corners {
+    @apply pointer-events-none absolute inset-0 z-10 p-8;
+}
+
+.scan-corner {
+    @apply absolute h-12 w-12;
+    border-color: rgba(0, 91, 191, 0.85);
+}
+
+.scan-corner-tl {
+    @apply left-8 top-8 rounded-tl-xl border-l-4 border-t-4;
+}
+
+.scan-corner-tr {
+    @apply right-8 top-8 rounded-tr-xl border-r-4 border-t-4;
+}
+
+.scan-corner-bl {
+    @apply bottom-8 left-8 rounded-bl-xl border-b-4 border-l-4;
+}
+
+.scan-corner-br {
+    @apply bottom-8 right-8 rounded-br-xl border-b-4 border-r-4;
+}
+
+.scan-line {
+    @apply absolute left-1/4 right-1/4 top-1/2 h-0.5;
+    background-color: rgba(0, 91, 191, 0.7);
+    box-shadow: 0 0 16px rgba(0, 91, 191, 0.75);
+}
+
+.scan-overlay {
+    @apply absolute inset-0 flex items-center justify-center bg-slate-950/40 p-6;
+}
+
+.scan-overlay-panel {
+    @apply max-w-sm rounded-[1.5rem] border px-8 py-8 text-center text-white;
+    background-color: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(14px);
+}
+
+.scan-overlay-icon {
+    @apply mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.scan-overlay-title {
+    @apply text-lg font-semibold;
+}
+
+.scan-overlay-copy {
+    @apply mb-6 mt-2 text-sm leading-6 text-white/80;
+}
+
+.scan-action-row {
+    @apply mt-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between;
+}
+
+.scan-action-note {
+    @apply text-sm font-medium;
+    color: var(--app-muted);
+}
+
+.scan-action-buttons {
+    @apply flex flex-wrap gap-3;
+}
+
+.scan-upload-card {
+    @apply rounded-[1.5rem] border-2 border-dashed p-8 text-center;
+    border-color: rgba(193, 198, 214, 0.5);
+    background-color: rgba(242, 243, 253, 0.62);
+}
+
+.scan-upload-icon {
+    @apply mx-auto mb-4;
+}
+
+.scan-upload-actions {
+    @apply mt-6 flex flex-wrap items-center justify-center gap-3;
+}
+
+.scan-upload-divider {
+    @apply text-xs font-semibold uppercase tracking-[0.16em];
+    color: var(--app-muted);
+}
+
+.scan-side-label {
+    @apply text-xs font-semibold uppercase tracking-[0.18em];
+    color: var(--app-muted);
+}
+
+.scan-status-card-body {
+    @apply mt-4 flex items-center gap-4 rounded-2xl p-4;
+    background-color: rgba(242, 243, 253, 0.78);
+}
+
+.scan-status-title {
+    @apply text-lg font-semibold;
+}
+
+.scan-error-text {
+    @apply mt-4 text-sm;
+    color: var(--app-danger);
+}
+
+.scan-tips-card {
+    @apply relative overflow-hidden rounded-[1.5rem] p-6 text-white;
+    background: linear-gradient(135deg, var(--app-primary), #1a73e8);
+    box-shadow: 0 22px 48px rgba(0, 91, 191, 0.24);
+}
+
+.scan-tips-card::after {
+    content: '';
+    position: absolute;
+    right: -2rem;
+    bottom: -2rem;
+    width: 9rem;
+    height: 9rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.scan-tips-list {
+    @apply relative z-10 mt-4 space-y-4 text-sm font-medium;
+}
+
+.scan-tips-list li {
+    @apply flex gap-3;
+}
+
+.scan-tips-list li::before {
+    content: '';
+    margin-top: 0.45rem;
+    height: 0.45rem;
+    width: 0.45rem;
+    flex-shrink: 0;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.92);
+}
+
+.scan-history-header {
+    @apply flex items-center justify-between gap-4;
+}
+
+.scan-history-clear {
+    @apply text-xs font-semibold uppercase tracking-[0.14em];
+    color: var(--app-primary);
+}
+
+.scan-decoded-panel {
+    @apply mt-5 rounded-2xl p-4;
+    background-color: rgba(242, 243, 253, 0.72);
+}
+
+.scan-decoded-value {
+    @apply mt-3 break-all text-sm font-medium leading-6;
+    color: var(--app-text);
+}
+
+.scan-history-empty {
+    @apply flex flex-col items-center py-10 text-center;
+}
+
+.scan-history-empty-icon {
+    @apply mb-4;
+}
+
+.roadmap-page {
+    @apply space-y-8;
+}
+
+.roadmap-hero {
+    @apply flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between;
+}
+
+.roadmap-kicker {
+    @apply text-[11px] font-semibold uppercase tracking-[0.24em];
+    color: var(--app-primary);
+}
+
+.roadmap-title {
+    @apply mt-2 text-4xl font-semibold tracking-tight sm:text-5xl;
+}
+
+.roadmap-copy {
+    @apply mt-4 max-w-3xl text-base leading-7;
+    color: var(--app-muted);
+}
+
+.roadmap-hero-actions {
+    @apply flex flex-wrap items-center gap-3;
+}
+
+.roadmap-action {
+    @apply inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-semibold transition;
+}
+
+.roadmap-action-primary {
+    background-color: #1a73e8;
+    color: #fff;
+    box-shadow: 0 18px 36px rgba(26, 115, 232, 0.2);
+}
+
+.roadmap-action-primary:hover {
+    filter: brightness(0.98);
+}
+
+.roadmap-action-secondary {
+    background-color: rgba(255, 255, 255, 0.82);
+    color: var(--app-text);
+    border: 1px solid rgba(193, 198, 214, 0.7);
+}
+
+.roadmap-action-secondary:hover {
+    background-color: rgba(242, 243, 253, 0.9);
+}
+
+.roadmap-stats {
+    @apply grid gap-6 md:grid-cols-2 xl:grid-cols-4;
+}
+
+.roadmap-stat-card {
+    @apply flex items-center justify-between rounded-2xl p-6;
+    background-color: rgba(255, 255, 255, 0.88);
+    box-shadow: 0 16px 36px rgba(0, 30, 84, 0.06);
+}
+
+.roadmap-stat-card-done .roadmap-stat-icon {
+    background-color: rgba(2, 122, 72, 0.1);
+    color: var(--app-success);
+}
+
+.roadmap-stat-card-progress .roadmap-stat-icon {
+    background-color: rgba(197, 85, 0, 0.12);
+    color: #9e4300;
+}
+
+.roadmap-stat-card-planned .roadmap-stat-icon {
+    background-color: rgba(71, 94, 140, 0.12);
+    color: var(--app-secondary);
+}
+
+.roadmap-stat-card-total .roadmap-stat-icon {
+    background-color: rgba(236, 237, 247, 0.92);
+    color: var(--app-text);
+}
+
+.roadmap-stat-label {
+    @apply text-xs font-semibold uppercase tracking-[0.18em];
+    color: var(--app-muted);
+}
+
+.roadmap-stat-value {
+    @apply mt-2 text-3xl font-semibold tracking-tight;
+}
+
+.roadmap-stat-icon {
+    @apply flex h-12 w-12 items-center justify-center rounded-full text-2xl font-semibold;
+}
+
+.roadmap-grid {
+    @apply grid gap-8 xl:grid-cols-[1.7fr,0.95fr];
+}
+
+.roadmap-main-column,
+.roadmap-side-column {
+    @apply space-y-8;
+}
+
+.roadmap-table-card,
+.roadmap-focus-card,
+.roadmap-velocity-card {
+    @apply overflow-hidden rounded-2xl;
+    background-color: rgba(255, 255, 255, 0.88);
+    box-shadow: 0 18px 40px rgba(0, 30, 84, 0.06);
+}
+
+.roadmap-card-header {
+    @apply flex flex-col gap-4 px-8 py-6 lg:flex-row lg:items-center lg:justify-between;
+}
+
+.roadmap-card-header-soft {
+    background-color: rgba(242, 243, 253, 0.78);
+}
+
+.roadmap-section-title {
+    @apply text-xl font-semibold tracking-tight;
+}
+
+.roadmap-section-copy {
+    @apply mt-2 text-sm leading-6;
+    color: var(--app-muted);
+}
+
+.roadmap-pill {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em];
+    background-color: rgba(230, 232, 242, 0.9);
+    color: var(--app-muted);
+}
+
+.roadmap-table-wrap {
+    @apply overflow-x-auto;
+}
+
+.roadmap-table {
+    @apply min-w-full border-collapse text-left;
+}
+
+.roadmap-table thead th {
+    @apply px-8 py-4 text-xs font-semibold uppercase tracking-[0.18em];
+    color: var(--app-muted);
+    border-bottom: 1px solid rgba(217, 222, 237, 0.9);
+}
+
+.roadmap-table tbody tr {
+    border-bottom: 1px solid rgba(217, 222, 237, 0.55);
+}
+
+.roadmap-table tbody tr:hover {
+    background-color: rgba(242, 243, 253, 0.28);
+}
+
+.roadmap-table td {
+    @apply px-8 py-5 text-sm;
+    color: var(--app-muted);
+}
+
+.roadmap-feature-name {
+    @apply font-semibold;
+    color: var(--app-text);
+}
+
+.roadmap-badge,
+.roadmap-priority {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em];
+}
+
+.roadmap-badge-done {
+    background-color: rgba(2, 122, 72, 0.12);
+    color: var(--app-success);
+}
+
+.roadmap-badge-progress {
+    background-color: rgba(197, 85, 0, 0.14);
+    color: #9e4300;
+}
+
+.roadmap-badge-planned {
+    background-color: rgba(0, 91, 191, 0.1);
+    color: var(--app-primary);
+}
+
+.roadmap-priority-stable {
+    background-color: rgba(2, 122, 72, 0.08);
+    color: var(--app-success);
+}
+
+.roadmap-priority-active {
+    background-color: rgba(26, 115, 232, 0.1);
+    color: #1a73e8;
+}
+
+.roadmap-priority-queued {
+    background-color: rgba(230, 232, 242, 0.92);
+    color: var(--app-muted);
+}
+
+.roadmap-phase-section {
+    @apply rounded-[1.75rem] p-6;
+    background:
+        linear-gradient(180deg, rgba(242, 243, 253, 0.72), rgba(255, 255, 255, 0.92));
+    box-shadow: 0 18px 40px rgba(0, 30, 84, 0.06);
+}
+
+.roadmap-phase-section-header {
+    @apply mb-6;
+}
+
+.roadmap-phase-grid {
+    @apply grid gap-6 md:grid-cols-2;
+}
+
+.roadmap-phase-card {
+    @apply relative overflow-hidden rounded-[1.5rem] border p-6;
+    border-color: rgba(217, 222, 237, 0.72);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(249, 249, 255, 0.94));
+    box-shadow: 0 16px 36px rgba(0, 30, 84, 0.05);
+    border-top-width: 1px;
+    border-top-color: rgba(217, 222, 237, 0.72);
+}
+
+.roadmap-phase-card::after {
+    content: '';
+    position: absolute;
+    right: -2.25rem;
+    top: -2.25rem;
+    width: 6.5rem;
+    height: 6.5rem;
+    border-radius: 9999px;
+    opacity: 0;
+}
+
+.roadmap-phase-card-primary {
+    border-top-color: rgba(217, 222, 237, 0.72);
+}
+
+.roadmap-phase-card-secondary {
+    border-top-color: rgba(217, 222, 237, 0.72);
+}
+
+.roadmap-phase-card-tertiary {
+    border-top-color: rgba(217, 222, 237, 0.72);
+}
+
+.roadmap-phase-card-danger {
+    border-top-color: rgba(217, 222, 237, 0.72);
+}
+
+.roadmap-phase-topline {
+    @apply relative z-10 flex items-center justify-between gap-4;
+}
+
+.roadmap-phase-tag {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em];
+}
+
+.roadmap-phase-tag-primary {
+    background-color: rgba(0, 91, 191, 0.1);
+    color: var(--app-primary);
+}
+
+.roadmap-phase-tag-secondary {
+    background-color: rgba(71, 94, 140, 0.12);
+    color: var(--app-secondary);
+}
+
+.roadmap-phase-tag-tertiary {
+    background-color: rgba(158, 67, 0, 0.12);
+    color: #9e4300;
+}
+
+.roadmap-phase-tag-danger {
+    background-color: rgba(180, 35, 24, 0.1);
+    color: var(--app-danger);
+}
+
+.roadmap-phase-header {
+    @apply relative z-10 mt-5 flex items-center justify-between gap-4;
+}
+
+.roadmap-phase-title {
+    @apply text-lg font-semibold tracking-tight;
+}
+
+.roadmap-phase-list {
+    @apply relative z-10 mt-5 space-y-3;
+}
+
+.roadmap-phase-list li {
+    @apply flex items-start gap-3 rounded-xl px-3 py-3 text-sm leading-6;
+    background-color: rgba(242, 243, 253, 0.72);
+    color: var(--app-muted);
+}
+
+.roadmap-phase-bullet {
+    margin-top: 0.55rem;
+    height: 0.5rem;
+    width: 0.5rem;
+    flex-shrink: 0;
+    border-radius: 9999px;
+    background-color: currentColor;
+    opacity: 0.6;
+}
+
+.roadmap-focus-card {
+    @apply relative overflow-hidden p-8;
+    background:
+        linear-gradient(180deg, rgba(242, 243, 253, 0.88), rgba(255, 255, 255, 0.92));
+}
+
+.roadmap-focus-label {
+    @apply text-xs font-semibold uppercase tracking-[0.22em];
+    color: var(--app-muted);
+}
+
+.roadmap-focus-list {
+    @apply mt-6 space-y-6;
+}
+
+.roadmap-focus-item {
+    @apply flex gap-4;
+}
+
+.roadmap-focus-bar {
+    @apply w-1 rounded-full;
+}
+
+.roadmap-focus-bar-0 {
+    background-color: var(--app-primary);
+}
+
+.roadmap-focus-bar-1 {
+    background-color: #9e4300;
+}
+
+.roadmap-focus-bar-2 {
+    background-color: var(--app-secondary);
+}
+
+.roadmap-focus-title {
+    @apply font-semibold;
+}
+
+.roadmap-focus-copy {
+    @apply mt-1 text-sm leading-6;
+    color: var(--app-muted);
+}
+
+.roadmap-progress-block {
+    @apply mt-8 border-t pt-6;
+    border-color: rgba(193, 198, 214, 0.48);
+}
+
+.roadmap-progress-copy {
+    @apply mb-2 flex items-center justify-between text-xs font-semibold uppercase tracking-[0.12em];
+    color: var(--app-muted);
+}
+
+.roadmap-progress-track {
+    @apply h-2 overflow-hidden rounded-full;
+    background-color: rgba(224, 226, 236, 0.8);
+}
+
+.roadmap-progress-fill {
+    @apply h-full rounded-full;
+    background: linear-gradient(90deg, var(--app-primary), #1a73e8);
+}
+
+.roadmap-velocity-card {
+    @apply p-8;
+}
+
+.roadmap-bars {
+    @apply mt-8 flex h-48 items-end justify-between gap-3 px-2;
+}
+
+.roadmap-bar {
+    @apply w-full rounded-t-xl;
+    background: linear-gradient(180deg, rgba(26, 115, 232, 0.82), rgba(0, 91, 191, 0.45));
+}
+
+.roadmap-bar-w1 {
+    height: 40%;
+    opacity: 0.28;
+}
+
+.roadmap-bar-w2 {
+    height: 62%;
+    opacity: 0.44;
+}
+
+.roadmap-bar-w3 {
+    height: 48%;
+    opacity: 0.6;
+}
+
+.roadmap-bar-current {
+    height: 86%;
+    box-shadow: 0 18px 34px rgba(26, 115, 232, 0.2);
+}
+
+.roadmap-bar-labels {
+    @apply mt-4 flex justify-between px-1 text-[11px] font-semibold uppercase tracking-[0.14em];
+    color: var(--app-muted);
+}
+
+.roadmap-velocity-copy {
+    @apply mt-6 text-center text-sm italic leading-6;
+    color: var(--app-muted);
+}
+
+.roadmap-quote-card {
+    @apply relative min-h-[19rem] overflow-hidden rounded-2xl;
+    background:
+        linear-gradient(135deg, rgba(15, 23, 42, 0.78), rgba(0, 91, 191, 0.88)),
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.12), transparent 28%);
+    box-shadow: 0 22px 48px rgba(0, 30, 84, 0.14);
+}
+
+.roadmap-quote-overlay {
+    @apply absolute inset-0;
+    background:
+        linear-gradient(180deg, transparent 35%, rgba(0, 35, 92, 0.72) 100%),
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.08), transparent 30%);
+}
+
+.roadmap-quote-content {
+    @apply absolute inset-x-0 bottom-0 p-6;
+}
+
+.roadmap-quote-title {
+    @apply text-xl font-semibold leading-tight text-white;
+}
+
+.roadmap-quote-subtitle {
+    @apply mt-3 text-xs font-semibold uppercase tracking-[0.18em] text-white/70;
 }
 
 .guest-shell {

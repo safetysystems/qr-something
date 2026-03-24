@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Roadmap Page Export</title>
+    <style>
+        :root {
+            --bg: #f9f9ff;
+            --panel: #ffffff;
+            --panel-alt: #f2f3fd;
+            --border: #d9deed;
+            --text: #191c23;
+            --muted: #5f6677;
+            --primary: #005bbf;
+            --primary-soft: rgba(178, 201, 254, 0.32);
+            --success: #027a48;
+            --success-bg: rgba(2, 122, 72, 0.12);
+            --warning: #9e4300;
+            --warning-bg: rgba(197, 85, 0, 0.14);
+            --planned-bg: rgba(0, 91, 191, 0.1);
+            --shadow: 0 22px 48px rgba(0, 30, 84, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Inter, Arial, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top center, rgba(173, 199, 255, 0.24), transparent 34%),
+                var(--bg);
+        }
+
+        .page {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 36px 48px;
+        }
+
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 24px;
+        }
+
+        .eyebrow {
+            margin: 0;
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 12px 0 0;
+            font-size: 42px;
+            line-height: 1.05;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            max-width: 760px;
+            margin: 16px 0 0;
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            min-width: 520px;
+        }
+
+        .stat {
+            background: rgba(255, 255, 255, 0.86);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+            padding: 18px 20px;
+        }
+
+        .stat-label {
+            margin: 0;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .stat-value {
+            margin: 12px 0 0;
+            font-size: 34px;
+            font-weight: 800;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .stack {
+            display: grid;
+            gap: 24px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            box-shadow: var(--shadow);
+            padding: 28px;
+        }
+
+        .card h2 {
+            margin: 0;
+            font-size: 24px;
+            line-height: 1.15;
+            font-weight: 750;
+        }
+
+        .card-copy {
+            margin: 10px 0 0;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.65;
+        }
+
+        .list {
+            margin-top: 22px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 18px;
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .row:first-child {
+            border-top: 0;
+            padding-top: 0;
+        }
+
+        .row:last-child {
+            padding-bottom: 0;
+        }
+
+        .row p {
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.55;
+            font-weight: 600;
+        }
+
+        .badge {
+            white-space: nowrap;
+            border-radius: 999px;
+            padding: 8px 12px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .badge-done {
+            background: var(--success-bg);
+            color: var(--success);
+        }
+
+        .badge-progress {
+            background: var(--warning-bg);
+            color: var(--warning);
+        }
+
+        .badge-planned {
+            background: var(--planned-bg);
+            color: var(--primary);
+        }
+
+        .phase {
+            margin-top: 18px;
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 18px 18px 16px;
+            background: linear-gradient(180deg, #ffffff, #fbfbff);
+        }
+
+        .phase:first-of-type {
+            margin-top: 22px;
+        }
+
+        .phase-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .phase-title {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 750;
+        }
+
+        .phase-items {
+            margin: 14px 0 0;
+            padding-left: 18px;
+            color: var(--muted);
+        }
+
+        .phase-items li {
+            margin: 8px 0 0;
+            line-height: 1.55;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <section class="hero">
+            <div>
+                <p class="eyebrow">Roadmap</p>
+                <h1>Equipment Inspection SaaS</h1>
+                <p class="subtitle">Temporary internal tracker for the admin surface while the product structure is still settling.</p>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <p class="stat-label">Done</p>
+                    <p class="stat-value">10</p>
+                </div>
+                <div class="stat">
+                    <p class="stat-label">In Progress</p>
+                    <p class="stat-value">3</p>
+                </div>
+                <div class="stat">
+                    <p class="stat-label">Planned</p>
+                    <p class="stat-value">3</p>
+                </div>
+                <div class="stat">
+                    <p class="stat-label">Total</p>
+                    <p class="stat-value">16</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid">
+            <div class="card">
+                <h2>Feature Checklist</h2>
+                <p class="card-copy">Temporary progress list for the current build-out.</p>
+
+                <div class="list">
+                    <div class="row"><p>Custom session authentication</p><span class="badge badge-done">Done</span></div>
+                    <div class="row"><p>Public-facing website</p><span class="badge badge-done">Done</span></div>
+                    <div class="row"><p>Self-serve workplace registration</p><span class="badge badge-done">Done</span></div>
+                    <div class="row"><p>Super admin dashboard shell</p><span class="badge badge-done">Done</span></div>
+                    <div class="row"><p>Workplace CRUD</p><span class="badge badge-done">Done</span></div>
+                    <div class="row"><p>Equipment CRUD</p><span class="badge badge-done">Done</span></div>
+                    <div class="row"><p>Workplace client layout</p><span class="badge badge-progress">In Progress</span></div>
+                    <div class="row"><p>Workplace dashboard</p><span class="badge badge-progress">In Progress</span></div>
+                    <div class="row"><p>Client equipment views</p><span class="badge badge-progress">In Progress</span></div>
+                    <div class="row"><p>Inspection templates</p><span class="badge badge-done">Done</span></div>
+                    <div class="row"><p>Inspection submission flow</p><span class="badge badge-done">Done</span></div>
+                    <div class="row"><p>QR code generation</p><span class="badge badge-done">Done</span></div>
+                    <div class="row"><p>QR scanner page</p><span class="badge badge-done">Done</span></div>
+                    <div class="row"><p>Client-safe scan destination</p><span class="badge badge-planned">Planned</span></div>
+                    <div class="row"><p>Workplace user management UI</p><span class="badge badge-planned">Planned</span></div>
+                    <div class="row"><p>Reports and analytics</p><span class="badge badge-planned">Planned</span></div>
+                </div>
+            </div>
+
+            <div class="stack">
+                <div class="card">
+                    <h2>Current Focus</h2>
+                    <p class="card-copy">Use this to keep active work constrained.</p>
+
+                    <div class="list">
+                        <div class="row"><p>Keep the split between super admin and workplace client surfaces clean.</p></div>
+                        <div class="row"><p>Stabilize inspections, QR flows, and workplace-scoped access rules.</p></div>
+                        <div class="row"><p>Avoid feature creep until the client portal and inspection flow are reliable.</p></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Phases</h2>
+                    <p class="card-copy">High-level roadmap for the next build stages.</p>
+
+                    <div class="phase">
+                        <div class="phase-top">
+                            <h3 class="phase-title">Core Platform</h3>
+                            <span class="badge badge-done">Done</span>
+                        </div>
+                        <ul class="phase-items">
+                            <li>Custom authentication</li>
+                            <li>Super admin dashboard</li>
+                            <li>Workplace registry</li>
+                            <li>Equipment registry</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase">
+                        <div class="phase-top">
+                            <h3 class="phase-title">Client Portal</h3>
+                            <span class="badge badge-progress">In Progress</span>
+                        </div>
+                        <ul class="phase-items">
+                            <li>Separate workplace layout</li>
+                            <li>Workplace dashboard</li>
+                            <li>Workplace equipment views</li>
+                            <li>Public registration and onboarding</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase">
+                        <div class="phase-top">
+                            <h3 class="phase-title">Inspection Operations</h3>
+                            <span class="badge badge-progress">In Progress</span>
+                        </div>
+                        <ul class="phase-items">
+                            <li>Inspection templates</li>
+                            <li>Inspection submission flow</li>
+                            <li>Inspection result history</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase">
+                        <div class="phase-top">
+                            <h3 class="phase-title">Field Workflow</h3>
+                            <span class="badge badge-planned">Planned</span>
+                        </div>
+                        <ul class="phase-items">
+                            <li>Public or client-safe scan landing page</li>
+                            <li>QR regeneration workflow</li>
+                            <li>Mobile-friendly inspection flow</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
