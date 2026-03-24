@@ -98,25 +98,93 @@ function deleteEquipment(item) {
                         <td>{{ item.location_label || 'Not set' }}</td>
                         <td>{{ formatDate(item.created_at) }}</td>
                         <td>
-                            <div class="flex flex-wrap items-center gap-3">
+                            <div class="flex flex-wrap items-center gap-2">
                                 <Link
                                     :href="item.links.client_show"
-                                    class="link-primary font-semibold"
+                                    class="table-action-icon table-action-icon-view"
+                                    title="View equipment"
                                 >
-                                    View
+                                    <svg viewBox="0 0 24 24" aria-hidden="true" class="table-action-svg">
+                                        <path
+                                            d="M2.25 12s3.75-6.75 9.75-6.75S21.75 12 21.75 12s-3.75 6.75-9.75 6.75S2.25 12 2.25 12Z"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.8"
+                                        />
+                                        <circle
+                                            cx="12"
+                                            cy="12"
+                                            r="3"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="1.8"
+                                        />
+                                    </svg>
+                                    <span class="sr-only">View equipment</span>
                                 </Link>
                                 <Link
                                     :href="item.links.client_edit"
-                                    class="font-semibold text-slate-700 transition hover:text-primary"
+                                    class="table-action-icon table-action-icon-edit"
+                                    title="Edit equipment"
                                 >
-                                    Edit
+                                    <svg viewBox="0 0 24 24" aria-hidden="true" class="table-action-svg">
+                                        <path
+                                            d="M16.86 3.49a2.12 2.12 0 0 1 3 3L9 17.35l-4.5 1.15 1.15-4.5L16.86 3.49Z"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.8"
+                                        />
+                                        <path
+                                            d="M14.5 5.85 18.15 9.5"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-linecap="round"
+                                            stroke-width="1.8"
+                                        />
+                                    </svg>
+                                    <span class="sr-only">Edit equipment</span>
                                 </Link>
                                 <button
                                     type="button"
-                                    class="font-semibold text-red-600 transition hover:text-red-700"
+                                    class="table-action-icon table-action-icon-delete"
+                                    title="Delete equipment"
                                     @click="deleteEquipment(item)"
                                 >
-                                    Delete
+                                    <svg viewBox="0 0 24 24" aria-hidden="true" class="table-action-svg">
+                                        <path
+                                            d="M4.5 7.5h15"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-linecap="round"
+                                            stroke-width="1.8"
+                                        />
+                                        <path
+                                            d="M9.5 3.75h5a1 1 0 0 1 1 1V7.5h-7V4.75a1 1 0 0 1 1-1Z"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.8"
+                                        />
+                                        <path
+                                            d="M6.5 7.5 7.3 19a1.5 1.5 0 0 0 1.5 1.4h6.4a1.5 1.5 0 0 0 1.5-1.4l.8-11.5"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.8"
+                                        />
+                                        <path
+                                            d="M10 10.5v6M14 10.5v6"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-linecap="round"
+                                            stroke-width="1.8"
+                                        />
+                                    </svg>
+                                    <span class="sr-only">Delete equipment</span>
                                 </button>
                             </div>
                         </td>
@@ -131,3 +199,38 @@ function deleteEquipment(item) {
         />
     </section>
 </template>
+
+<style scoped>
+.table-action-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.625rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.table-action-svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+.table-action-icon:hover {
+    background-color: #e2e8f0;
+}
+
+.table-action-icon-view {
+    color: #2563eb;
+}
+
+.table-action-icon-edit {
+    color: #334155;
+}
+
+.table-action-icon-delete {
+    color: #dc2626;
+}
+</style>
