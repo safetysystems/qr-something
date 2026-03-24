@@ -12,6 +12,7 @@ use App\Http\Controllers\InspectionTemplateController;
 use App\Http\Controllers\ProjectTrackerController;
 use App\Http\Controllers\PublicSiteController;
 use App\Http\Controllers\ScanController;
+use App\Http\Controllers\ScanControllerTemp;
 use App\Http\Controllers\WorkplaceController;
 use App\Http\Middleware\EnsureSuperAdmin;
 use App\Http\Middleware\EnsureWorkplaceUser;
@@ -46,6 +47,9 @@ Route::middleware(['auth', EnsureSuperAdmin::class])->group(function (): void {
         ->name('project-tracker.index');
     Route::get('/scan', ScanController::class)
         ->name('scanner.index');
+        
+    Route::get('/scan-test', [ScanControllerTemp::class, 'index'])
+        ->name('scanner-test.index');
 
     Route::resource('workplaces', WorkplaceController::class);
     Route::resource('workplaces.inspection-templates', InspectionTemplateController::class)
