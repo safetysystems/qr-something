@@ -35,7 +35,7 @@ defineProps({
         </div>
         <h1 class="page-title mt-2">{{ equipment.name }}</h1>
         <p class="page-subtitle mt-3">
-            Read-only equipment view for {{ workplace.name }}.
+            View and manage this equipment record for {{ workplace.name }}.
         </p>
     </section>
 

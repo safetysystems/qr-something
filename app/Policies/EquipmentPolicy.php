@@ -20,11 +20,11 @@ class EquipmentPolicy
 
     public function update(User $user, Equipment $equipment): bool
     {
-        return $user->is_super_admin;
+        return $user->canAccessWorkplace($equipment->workplace) && is_null($equipment->archived_at);
     }
 
     public function delete(User $user, Equipment $equipment): bool
     {
-        return $user->is_super_admin;
+        return $user->canAccessWorkplace($equipment->workplace) && is_null($equipment->archived_at);
     }
 }

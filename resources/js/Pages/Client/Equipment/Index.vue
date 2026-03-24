@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import BaseButton from '@/Components/Base/BaseButton.vue';
 import BasePagination from '@/Components/Base/BasePagination.vue';
 import ClientLayout from '@/Layouts/ClientLayout.vue';
@@ -23,6 +23,18 @@ defineProps({
         required: true,
     },
 });
+
+function deleteEquipment(item) {
+    if (!item?.links?.client_destroy) {
+        return;
+    }
+
+    if (!window.confirm(`Archive ${item.name}?`)) {
+        return;
+    }
+
+    router.delete(item.links.client_destroy);
+}
 </script>
 
 <template>
@@ -69,7 +81,7 @@ defineProps({
                         <th>Asset code</th>
                         <th>Location</th>
                         <th>Created</th>
-                        <th class="w-28">Action</th>
+                        <th class="w-48">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -86,12 +98,27 @@ defineProps({
                         <td>{{ item.location_label || 'Not set' }}</td>
                         <td>{{ formatDate(item.created_at) }}</td>
                         <td>
-                            <Link
-                                :href="item.links.client_show"
-                                class="link-primary font-semibold"
-                            >
-                                View
-                            </Link>
+                            <div class="flex flex-wrap items-center gap-3">
+                                <Link
+                                    :href="item.links.client_show"
+                                    class="link-primary font-semibold"
+                                >
+                                    View
+                                </Link>
+                                <Link
+                                    :href="item.links.client_edit"
+                                    class="font-semibold text-slate-700 transition hover:text-primary"
+                                >
+                                    Edit
+                                </Link>
+                                <button
+                                    type="button"
+                                    class="font-semibold text-red-600 transition hover:text-red-700"
+                                    @click="deleteEquipment(item)"
+                                >
+                                    Delete
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>

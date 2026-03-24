@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEquipmentRequest;
+use App\Http\Requests\UpdateEquipmentRequest;
 use App\Http\Resources\EquipmentResource;
 use App\Http\Resources\InspectionResource;
 use App\Http\Resources\WorkplaceResource;
@@ -10,6 +11,7 @@ use App\Models\Equipment;
 use App\Services\EquipmentService;
 use App\Services\InspectionService;
 use App\Services\WorkplaceContextService;
+use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -86,5 +88,50 @@ class ClientEquipmentController extends Controller
                 InspectionResource::class
             ),
         ]);
+    }
+
+    public function edit(Equipment $equipment): Response
+    {
+        $workplace = $this->workplaceContextService->current(request()->user());
+
+        abort_unless($equipment->workplace_id === $workplace->id, 404);
+
+        $this->authorize('update', $equipment);
+
+        return Inertia::render('Client/Equipment/Edit', [
+            'equipment' => EquipmentResource::make(
+                $equipment->load('workplace', 'creator')
+            )->resolve(request()),
+        ]);
+    }
+
+    public function update(UpdateEquipmentRequest $request, Equipment $equipment): RedirectResponse
+    {
+        $workplace = $this->workplaceContextService->current($request->user());
+
+        abort_unless($equipment->workplace_id === $workplace->id, 404);
+
+        $this->authorize('update', $equipment);
+
+        $equipment = $this->equipmentService->update($equipment, $request->validated());
+
+        return redirect()
+            ->route('client.equipment.show', $equipment)
+            ->with('status', 'Equipment updated successfully.');
+    }
+
+    public function destroy(Request $request, Equipment $equipment): RedirectResponse
+    {
+        $workplace = $this->workplaceContextService->current($request->user());
+
+        abort_unless($equipment->workplace_id === $workplace->id, 404);
+
+        $this->authorize('delete', $equipment);
+
+        $this->equipmentService->archive($equipment);
+
+        return redirect()
+            ->route('client.equipment.index')
+            ->with('status', 'Equipment archived successfully.');
     }
 }

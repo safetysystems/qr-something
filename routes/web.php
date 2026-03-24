@@ -85,4 +85,13 @@ Route::middleware(['auth', EnsureWorkplaceUser::class])
 
         Route::get('/equipment/{equipment}', [ClientEquipmentController::class, 'show'])
             ->name('equipment.show');
+
+        Route::get('/equipment/{equipment}/edit', [ClientEquipmentController::class, 'edit'])
+            ->name('equipment.edit');
+
+        Route::put('/equipment/{equipment}', [ClientEquipmentController::class, 'update'])
+            ->name('equipment.update');
+
+        Route::delete('/equipment/{equipment}', [ClientEquipmentController::class, 'destroy'])
+            ->name('equipment.destroy');
     });

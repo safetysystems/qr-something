@@ -50,8 +50,11 @@ class EquipmentResource extends JsonResource
                 'show' => route('equipment.show', $this->resource),
                 'client_show' => route('client.equipment.show', $this->resource),
                 'edit' => route('equipment.edit', $this->resource),
+                'client_edit' => route('client.equipment.edit', $this->resource),
                 'update' => route('equipment.update', $this->resource),
+                'client_update' => route('client.equipment.update', $this->resource),
                 'destroy' => route('equipment.destroy', $this->resource),
+                'client_destroy' => route('client.equipment.destroy', $this->resource),
                 'create_inspection' => route('equipment.inspections.create', $this->resource),
                 'store_inspection' => route('equipment.inspections.store', $this->resource),
                 'workplace' => $this->relationLoaded('workplace') && $this->workplace
