@@ -117,37 +117,38 @@ function closeSidebar() {
 </script>
 
 <template>
-    <div class="min-h-screen flex items-center justify-center p-0 md:p-8 bg-slate-100 font-['Inter']">
-        <div class="w-full max-w-7xl bg-[#f8fafc] rounded-xl shadow-xl overflow-hidden flex min-h-[800px] relative">
-            
-            <div 
-                v-if="sidebarOpen" 
-                class="fixed inset-0 bg-slate-900/50 z-20 md:hidden"
+    <div class="min-h-screen bg-slate-100 font-['Inter'] md:flex md:items-center md:justify-center md:p-6 xl:p-8">
+        <div class="relative flex min-h-screen w-full overflow-hidden bg-[#f8fafc] md:min-h-[720px] md:max-w-7xl md:rounded-[28px] md:shadow-xl">
+            <div
+                v-if="sidebarOpen"
+                class="fixed inset-0 z-20 bg-slate-900/50 md:hidden"
                 @click="closeSidebar"
             ></div>
 
-            <aside 
+            <aside
                 :class="[
-                    'w-64 bg-white border-r border-slate-200 flex flex-col z-30 transition-transform duration-300 absolute inset-y-0 left-0 md:relative md:translate-x-0',
+                    'absolute inset-y-0 left-0 z-30 flex w-[88vw] max-w-72 flex-col border-r border-slate-200 bg-white transition-transform duration-300 md:relative md:w-64 md:max-w-none md:translate-x-0',
                     sidebarOpen ? 'translate-x-0' : '-translate-x-full'
                 ]"
             >
-                <div class="h-20 flex items-center px-6">
-                    <Link :href="navigation.dashboard" class="text-3xl font-bold text-[#2563eb] italic tracking-tighter">
+                <div class="flex h-20 items-center px-5 md:px-6">
+                    <Link :href="navigation.dashboard" class="text-3xl font-bold italic tracking-tighter text-[#2563eb]">
                         WP
                     </Link>
                 </div>
 
-                <nav class="flex-1 px-4 py-4 space-y-2">
+                <nav class="flex-1 space-y-2 px-4 py-4">
                     <Link
                         :href="navigation.dashboard"
                         @click="closeSidebar"
                         :class="[
-                            'flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-colors',
+                            'flex items-center space-x-3 rounded-lg px-4 py-3 font-medium transition-colors',
                             isDashboard ? 'bg-blue-50 text-[#2563eb]' : 'text-[#64748b] hover:bg-slate-50 hover:text-[#0f172a]'
                         ]"
                     >
-                        <i class="fa-solid fa-border-all w-5 text-center"></i>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5 shrink-0">
+                            <path d="M4 13h6V4H4zM14 20h6v-9h-6zM14 10h6V4h-6zM4 20h6v-3H4z" fill="none" stroke="currentColor" stroke-width="1.8" />
+                        </svg>
                         <span>Dashboard</span>
                     </Link>
 
@@ -155,19 +156,23 @@ function closeSidebar() {
                         :href="navigation.equipment"
                         @click="closeSidebar"
                         :class="[
-                            'flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-colors',
+                            'flex items-center space-x-3 rounded-lg px-4 py-3 font-medium transition-colors',
                             isEquipment ? 'bg-blue-50 text-[#2563eb]' : 'text-[#64748b] hover:bg-slate-50 hover:text-[#0f172a]'
                         ]"
                     >
-                        <i class="fa-solid fa-desktop w-5 text-center"></i>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5 shrink-0">
+                            <path d="M4 5.5h16v10H4zM9 19h6M12 15.5V19" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" />
+                        </svg>
                         <span>Equipment</span>
                     </Link>
 
                     <Link
                         :href="navigation.home"
-                        class="flex items-center space-x-3 px-4 py-3 text-[#64748b] hover:bg-slate-50 hover:text-[#0f172a] rounded-lg transition-colors"
+                        class="flex items-center space-x-3 rounded-lg px-4 py-3 text-[#64748b] transition-colors hover:bg-slate-50 hover:text-[#0f172a]"
                     >
-                        <i class="fa-solid fa-globe w-5 text-center"></i>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5 shrink-0">
+                            <path d="M12 3.5a8.5 8.5 0 1 0 0 17a8.5 8.5 0 1 0 0-17ZM3.8 12h16.4M12 3.8c2.1 2.2 3.3 5.1 3.3 8.2S14.1 18 12 20.2M12 3.8C9.9 6 8.7 8.9 8.7 12s1.2 6 3.3 8.2" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" />
+                        </svg>
                         <span>Public Website</span>
                     </Link>
                 </nav>
@@ -175,78 +180,109 @@ function closeSidebar() {
                 <div class="border-t border-slate-200 p-4">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-3 overflow-hidden">
-                            <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-primary font-bold shrink-0">
+                            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-200 font-bold text-primary">
                                 {{ authUser?.name?.slice(0, 1) || 'U' }}
                             </div>
                             <div class="truncate">
-                                <p class="font-medium text-sm text-[#0f172a] truncate">{{ authUser?.name }}</p>
-                                <p class="text-xs text-[#64748b] truncate">{{ currentRole }}</p>
+                                <p class="truncate text-sm font-medium text-[#0f172a]">{{ authUser?.name }}</p>
+                                <p class="truncate text-xs text-[#64748b]">{{ currentRole }}</p>
                             </div>
                         </div>
-                        <button 
-                            @click="logout" 
-                            class="text-[#64748b] hover:text-red-600 transition-colors p-1"
+                        <button
+                            @click="logout"
+                            class="rounded-lg p-2 text-[#64748b] transition-colors hover:bg-slate-100 hover:text-red-600"
                             title="Sign out"
                         >
-                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5">
+                                <path d="M10 17v1.5A1.5 1.5 0 0 1 8.5 20h-3A1.5 1.5 0 0 1 4 18.5v-13A1.5 1.5 0 0 1 5.5 4h3A1.5 1.5 0 0 1 10 5.5V7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" />
+                                <path d="M14 16l4-4-4-4M9 12h9" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" />
+                            </svg>
                         </button>
                     </div>
                 </div>
             </aside>
 
-            <main class="flex-1 flex flex-col p-6 md:p-8 overflow-y-auto">
-                <header class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
-                    <div class="flex items-center gap-3">
-                        <button @click="toggleSidebar" class="md:hidden text-slate-600 p-1">
-                            <i class="fa-solid fa-bars text-xl"></i>
-                        </button>
-                        <div>
-                            <h1 class="text-2xl md:text-3xl font-bold text-[#0f172a] mb-1">
-                                {{ pageMeta.title }}
-                            </h1>
-                            <div class="text-sm text-[#64748b] flex items-center space-x-2">
-                                <span>{{ pageMeta.eyebrow }}</span>
-                                <i class="fa-solid fa-chevron-right text-[10px]"></i>
-                                <span>{{ pageMeta.title }}</span>
+            <main class="flex-1 overflow-y-auto">
+                <header class="sticky top-0 z-10 border-b border-slate-200/80 bg-[#f8fafc]/95 backdrop-blur">
+                    <div class="flex flex-col gap-4 px-4 py-4 sm:px-6 md:px-8">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="flex min-w-0 items-start gap-3">
+                                <button
+                                    @click="toggleSidebar"
+                                    class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm md:hidden"
+                                >
+                                    <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5">
+                                        <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8" />
+                                    </svg>
+                                    <span class="sr-only">Open navigation</span>
+                                </button>
+
+                                <div class="min-w-0">
+                                    <h1 class="mb-1 text-2xl font-bold text-[#0f172a] md:text-3xl">
+                                        {{ pageMeta.title }}
+                                    </h1>
+                                    <div class="flex flex-wrap items-center gap-2 text-sm text-[#64748b]">
+                                        <span>{{ pageMeta.eyebrow }}</span>
+                                        <svg viewBox="0 0 20 20" aria-hidden="true" class="h-3 w-3 shrink-0">
+                                            <path d="m7 4 6 6-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" />
+                                        </svg>
+                                        <span class="truncate">{{ pageMeta.title }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="hidden min-w-0 items-center gap-3 sm:flex">
+                                <div class="truncate text-right">
+                                    <p class="truncate text-sm font-semibold text-[#0f172a]">{{ authUser?.name }}</p>
+                                    <p class="truncate text-xs text-[#64748b]">{{ currentRole }}</p>
+                                </div>
+                                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-200 font-bold text-primary">
+                                    {{ authUser?.name?.slice(0, 1) || 'U' }}
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="flex items-center space-x-3">
-                        <BaseButton
-                            v-for="action in topbarActions"
-                            :key="action.label"
-                            :href="action.href"
-                            :variant="action.variant"
-                            :title="action.title"
-                            class="!px-5 !py-2.5 !rounded-lg !shadow-sm !font-medium"
-                        >
-                            {{ action.label }}
-                        </BaseButton>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <BaseButton
+                                v-for="action in topbarActions"
+                                :key="action.label"
+                                :href="action.href"
+                                :variant="action.variant"
+                                :title="action.title"
+                                class="!rounded-xl !px-4 !py-2.5 text-sm"
+                            >
+                                {{ action.label }}
+                            </BaseButton>
 
-                        <BaseButton
-                            v-for="action in equipmentActions"
-                            :key="action.label"
-                            :variant="action.variant"
-                            :title="action.title"
-                            class="!px-5 !py-2.5 !rounded-lg !shadow-sm !font-medium"
-                            @click="action.onClick"
-                        >
-                            {{ action.label }}
-                        </BaseButton>
+                            <BaseButton
+                                v-for="action in equipmentActions"
+                                :key="action.label"
+                                :variant="action.variant"
+                                :title="action.title"
+                                class="!rounded-xl !px-4 !py-2.5 text-sm"
+                                @click="action.onClick"
+                            >
+                                {{ action.label }}
+                            </BaseButton>
+                        </div>
                     </div>
                 </header>
 
-                <div 
-                    v-if="flashStatus" 
-                    class="mb-6 p-4 bg-blue-50 border border-blue-100 text-[#2563eb] rounded-xl flex items-center animate-fade-in"
-                >
-                    <i class="fa-solid fa-circle-info mr-3"></i>
-                    <span class="text-sm font-medium">{{ flashStatus }}</span>
-                </div>
+                <div class="px-4 py-5 sm:px-6 md:px-8 md:py-8">
+                    <div
+                        v-if="flashStatus"
+                        class="mb-6 flex items-center rounded-xl border border-blue-100 bg-blue-50 p-4 text-[#2563eb] animate-fade-in"
+                    >
+                        <svg viewBox="0 0 24 24" aria-hidden="true" class="mr-3 h-5 w-5 shrink-0">
+                            <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8" />
+                            <path d="M12 10v5M12 7.5h.01" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8" />
+                        </svg>
+                        <span class="text-sm font-medium">{{ flashStatus }}</span>
+                    </div>
 
-                <div class="flex-1">
-                    <slot />
+                    <div class="flex-1">
+                        <slot />
+                    </div>
                 </div>
             </main>
         </div>
@@ -275,5 +311,12 @@ function closeSidebar() {
     background-color: #ffffff !important;
     border: 1px solid #e2e8f0 !important;
     color: #2563eb !important;
+}
+
+@media (max-width: 639px) {
+    :deep(.btn) {
+        width: 100%;
+        justify-content: center;
+    }
 }
 </style>
